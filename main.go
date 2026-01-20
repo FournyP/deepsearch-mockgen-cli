@@ -18,6 +18,10 @@ func main() {
 	flag.BoolVar(&acceptAll, "A", false, "Generate mocks for all interfaces without prompting")
 	flag.BoolVar(&acceptAll, "all", false, "Generate mocks for all interfaces without prompting")
 
+	var skipPathPrompt bool
+	flag.BoolVar(&skipPathPrompt, "S", false, "Skip per-interface mock path prompts and use defaults")
+	flag.BoolVar(&skipPathPrompt, "skip-path-prompt", false, "Skip per-interface mock path prompts and use defaults")
+
 	// Parse flags
 	flag.Parse()
 
@@ -66,16 +70,19 @@ func main() {
 
 	// For each selected interface, compute default path and confirm/modify
 	finalPaths := make(map[string]string)
-	for iface, _ := range selected {
+	for iface := range selected {
 		ifacePath := interfaces[iface]
-		defaultMockPath := generator.ComputeMockPath(*searchDir, *outputDir, ifacePath, iface)
+		mockPath := generator.ComputeMockPath(*searchDir, *outputDir, ifacePath, iface)
 
-		mockPath, err := tui.RunTextInputPrompt(
-			fmt.Sprintf("Mock path for %s:", iface),
-			defaultMockPath,
-		)
-		if err != nil {
-			log.Fatal(err)
+		if !skipPathPrompt {
+			var err error
+			mockPath, err = tui.RunTextInputPrompt(
+				fmt.Sprintf("Mock path for %s:", iface),
+				mockPath,
+			)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		finalPaths[iface] = mockPath
