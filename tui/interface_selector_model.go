@@ -15,7 +15,7 @@ type interfaceSelectorModel struct {
 }
 
 func NewInterfaceSelector(items []list.Item) interfaceSelectorModel {
-	l := list.New(items, list.NewDefaultDelegate(), 50, 14)
+	l := list.New(items, list.NewDefaultDelegate(), 0, 0)
 	l.Title = "Interfaces"
 	l.SetShowStatusBar(false)
 	l.SetFilteringEnabled(false)
@@ -30,8 +30,17 @@ func (m interfaceSelectorModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	newLst, c := m.lst.Update(msg)
 	m.lst = newLst
 	cmd = c
-
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		reserved := 6
+		w := msg.Width
+		h := msg.Height - reserved
+		if h < 3 {
+			h = 3
+		}
+		m.lst.SetSize(w, h)
+		return m, cmd
+
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "q":
