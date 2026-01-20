@@ -21,13 +21,21 @@ func main() {
 	// Parse flags
 	flag.Parse()
 
-	// Prompt for missing values
+	// Prompt for missing values (uses TUI prompt helpers with stdin fallback)
 	if *searchDir == "" {
-		*searchDir = tui.PromptInput("Enter the search directory:")
+		var err error
+		*searchDir, err = tui.RunTextInputPrompt("Enter the search directory:", "")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	if *outputDir == "" {
-		*outputDir = tui.PromptInput("Enter the output directory:")
+		var err error
+		*outputDir, err = tui.RunTextInputPrompt("Enter the output directory:", "")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	// Find interfaces
@@ -41,25 +49,34 @@ func main() {
 		return
 	}
 
-	// Prompt user for each interface (or accept all when `-A/--all` provided)
-	finalPaths := make(map[string]string)
-	for iface, ifacePath := range interfaces {
-		if !acceptAll {
-			generate := tui.PromptYesNoWithDefaultValue(fmt.Sprintf("Generate mock for %s?:", iface), true)
-
-			if !generate {
-				continue
-			}
+	// Let user select interfaces via TUI list (or accept all when `-A/--all` provided)
+	var selected map[string]string
+	if acceptAll {
+		selected = make(map[string]string)
+		for iface := range interfaces {
+			selected[iface] = *outputDir
 		}
+	} else {
+		sel, err := tui.RunInterfaceSelector(interfaces, *outputDir)
+		if err != nil {
+			log.Fatal(err)
+		}
+		selected = sel
+	}
 
-		// Compute default mock path
+	// For each selected interface, compute default path and confirm/modify
+	finalPaths := make(map[string]string)
+	for iface, _ := range selected {
+		ifacePath := interfaces[iface]
 		defaultMockPath := generator.ComputeMockPath(*searchDir, *outputDir, ifacePath, iface)
 
-		// Ask the user to confirm or modify the path
-		mockPath := tui.PromptInputWithDefault(
+		mockPath, err := tui.RunTextInputPrompt(
 			fmt.Sprintf("Mock path for %s:", iface),
 			defaultMockPath,
 		)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		finalPaths[iface] = mockPath
 	}
