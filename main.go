@@ -89,12 +89,20 @@ func main() {
 	}
 
 	// Generate mocks
-	for iface, mockPath := range finalPaths {
-		err := generator.GenerateMock(iface, interfaces[iface], mockPath)
-		if err != nil {
-			log.Printf("Failed to generate mock for %s: %v\n", iface, err)
-		} else {
-			log.Printf("Mock generated for %s at %s\n", iface, mockPath)
+	// Generate mocks and show progress via TUI
+	updates := make(chan tui.ProgressUpdate)
+	go func() {
+		for iface, mockPath := range finalPaths {
+			err := generator.GenerateMock(iface, interfaces[iface], mockPath)
+			updates <- tui.ProgressUpdate{
+				Name: iface,
+				Err:  err,
+			}
 		}
+		close(updates)
+	}()
+
+	if err := tui.RunProgress(len(finalPaths), updates); err != nil {
+		log.Printf("Progress UI error: %v", err)
 	}
 }
