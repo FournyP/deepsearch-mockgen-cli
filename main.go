@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/FournyP/deepsearch-mockgen/generator"
 	"github.com/FournyP/deepsearch-mockgen/tui"
@@ -13,14 +14,29 @@ func main() {
 	// Define CLI flags
 	searchDir := flag.String("search", "", "Directory to search for interfaces")
 	outputDir := flag.String("output", "", "Directory to save generated mocks")
+	flag.StringVar(searchDir, "S", "", "Directory to search for interfaces")
+	flag.StringVar(outputDir, "O", "", "Directory to save generated mocks")
 
 	var acceptAll bool
 	flag.BoolVar(&acceptAll, "A", false, "Generate mocks for all interfaces without prompting")
 	flag.BoolVar(&acceptAll, "all", false, "Generate mocks for all interfaces without prompting")
 
 	var skipPathPrompt bool
-	flag.BoolVar(&skipPathPrompt, "S", false, "Skip per-interface mock path prompts and use defaults")
+	flag.BoolVar(&skipPathPrompt, "P", false, "Skip per-interface mock path prompts and use defaults")
 	flag.BoolVar(&skipPathPrompt, "skip-path-prompt", false, "Skip per-interface mock path prompts and use defaults")
+
+	flag.Usage = func() {
+		out := flag.CommandLine.Output()
+		fmt.Fprintf(out, "Usage: %s [options]\n\n", os.Args[0])
+		fmt.Fprintln(out, "Deepsearch-mockgen deeply scans a directory tree for Go interfaces and generates mocks using mockgen.")
+		fmt.Fprintln(out, "Mocks are written under the output directory following the same relative tree as the interface source files.")
+		fmt.Fprintln(out, "Options:")
+		fmt.Fprintln(out, "  -S, --search <dir>       Directory to search for interfaces")
+		fmt.Fprintln(out, "  -O, --output <dir>       Directory to save generated mocks")
+		fmt.Fprintln(out, "  -A, --all                Generate mocks for all interfaces without prompting")
+		fmt.Fprintln(out, "  -P, --skip-path-prompt   Skip per-interface mock path prompts and use defaults")
+		fmt.Fprintln(out, "  -h, --help               Show help")
+	}
 
 	// Parse flags
 	flag.Parse()
