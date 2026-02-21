@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Deepsearch-mockgen is a Go CLI that scans a directory for Go interfaces and generates mocks using the `mockgen` binary (from `github.com/uber-go/mock`). It provides a TUI flow for selecting interfaces and confirming output paths, plus CLI flags for non-interactive runs.
+Deepsearch-mockgen-cli is a Go CLI that scans a directory for Go interfaces and generates mocks using the `mockgen` binary (from `github.com/uber-go/mock`). It provides a TUI flow for selecting interfaces and confirming output paths, plus CLI flags for non-interactive runs.
 
 Key components:
 
@@ -45,7 +45,7 @@ Key components:
 - Build a local binary:
   - `go build .`
 - Optionally move the binary to your Go bin directory:
-  - `mv deepsearch-mockgen "$GOPATH/bin"`
+  - `mv deepsearch-mockgen-cli "$GOPATH/bin"`
 
 ## Pull Request Guidelines
 

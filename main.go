@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/FournyP/deepsearch-mockgen/generator"
-	"github.com/FournyP/deepsearch-mockgen/tui"
+	"github.com/FournyP/deepsearch-mockgen-cli/generator"
+	"github.com/FournyP/deepsearch-mockgen-cli/tui"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 	flag.Usage = func() {
 		out := flag.CommandLine.Output()
 		fmt.Fprintf(out, "Usage: %s [options]\n\n", os.Args[0])
-		fmt.Fprintln(out, "Deepsearch-mockgen deeply scans a directory tree for Go interfaces and generates mocks using mockgen.")
+		fmt.Fprintln(out, "Deepsearch-mockgen-cli deeply scans a directory tree for Go interfaces and generates mocks using mockgen.")
 		fmt.Fprintln(out, "Mocks are written under the output directory following the same relative tree as the interface source files.")
 		fmt.Fprintln(out, "Options:")
 		fmt.Fprintln(out, "  -S, --search <dir>       Directory to search for interfaces")
