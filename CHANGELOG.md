@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.0...v1.0.1) (2026-04-10)
+
+### :green_heart: CI/CD
+
+* trigger goreleaser via workflow_run after Release succeeds ([5c0b87f](https://github.com/FournyP/deepsearch-mockgen-cli/commit/5c0b87fd9c79f04a33bfd3742b6bc0e7157ef2c0))
+
 ## 1.0.0 (2026-04-10)
 
 ### :sparkles: Features
