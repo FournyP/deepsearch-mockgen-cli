@@ -23,7 +23,6 @@ func ComputeMockPath(searchDir, outputDir, ifacePath, ifaceName string) string {
 
 	// Convert ifaceName from PascalCase to snake_case
 	snakeCaseIfaceName := toSnakeCase(ifaceName)
-	snakeCaseIfaceName = strings.ToLower(snakeCaseIfaceName)
 	snakeCaseIfaceName = strings.ReplaceAll(snakeCaseIfaceName, "_interface", "")
 
 	// Define mock filename
@@ -32,20 +31,23 @@ func ComputeMockPath(searchDir, outputDir, ifacePath, ifaceName string) string {
 	return filepath.Join(mockDir, mockFile)
 }
 
-// toSnakeCase converts a PascalCase string to snake_case
+// toSnakeCase converts a PascalCase/CamelCase string to snake_case,
+// treating runs of uppercase letters as acronyms (e.g. "SaveLLM" -> "save_llm",
+// "HTTPClient" -> "http_client", "URLParser" -> "url_parser").
 func toSnakeCase(str string) string {
+	runes := []rune(str)
 	var result []rune
-	for i, r := range str {
+	for i, r := range runes {
 		if unicode.IsUpper(r) {
-			// Check if the next character is also uppercase
-			if i > 0 && (i+1 < len(str) && unicode.IsUpper(rune(str[i+1]))) {
-				result = append(result, unicode.ToLower(r))
-			} else {
-				if i > 0 {
+			if i > 0 {
+				prev := runes[i-1]
+				prevIsLowerOrDigit := unicode.IsLower(prev) || unicode.IsDigit(prev)
+				nextIsLower := i+1 < len(runes) && unicode.IsLower(runes[i+1])
+				if prevIsLowerOrDigit || (unicode.IsUpper(prev) && nextIsLower) {
 					result = append(result, '_')
 				}
-				result = append(result, unicode.ToLower(r))
 			}
+			result = append(result, unicode.ToLower(r))
 		} else {
 			result = append(result, r)
 		}
