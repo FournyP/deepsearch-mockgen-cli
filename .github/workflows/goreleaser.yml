@@ -4,12 +4,19 @@ on:
   push:
     tags:
       - "v*"
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   goreleaser:
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
