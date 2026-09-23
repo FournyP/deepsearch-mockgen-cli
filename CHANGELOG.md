@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.1...v1.0.2) (2026-09-23)
+
+### :green_heart: CI/CD
+
+* use built-in GITHUB_TOKEN for semantic-release ([45042c2](https://github.com/FournyP/deepsearch-mockgen-cli/commit/45042c21e7e305e5557f58c58bbf169c6626cae3))
+
 ## [1.0.1](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.0...v1.0.1) (2026-04-10)
 
 ### :green_heart: CI/CD
