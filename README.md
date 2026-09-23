@@ -54,6 +54,9 @@ Missing directories are prompted for. Mocks mirror the source tree under the out
 directory, each directory suffixed with `_mocks` (e.g. `src/pkg/saver.go` with
 `-S src -O tests` gives `tests/pkg_mocks/saver_mock.go`).
 
+Mocks are generated in parallel, one `mockgen` process per CPU at most. Interfaces
+whose mock paths are the same file are generated one after another.
+
 ## Development
 
 ```bash
