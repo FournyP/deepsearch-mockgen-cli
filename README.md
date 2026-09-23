@@ -40,3 +40,25 @@ mv deepsearch-mockgen-cli $GOPATH/bin
 ```bash
 deepsearch-mockgen-cli
 ```
+
+Options:
+
+```
+-S, --search <dir>       Directory to search for interfaces
+-O, --output <dir>       Directory to save generated mocks
+-A, --all                Generate mocks for all interfaces without prompting
+-P, --skip-path-prompt   Skip per-interface mock path prompts and use defaults
+```
+
+Missing directories are prompted for. Mocks mirror the source tree under the output
+directory, each directory suffixed with `_mocks` (e.g. `src/pkg/saver.go` with
+`-S src -O tests` gives `tests/pkg_mocks/saver_mock.go`).
+
+## Development
+
+```bash
+make test   # unit tests
+make mocks  # regenerate test mocks with this CLI
+```
+
+Architecture (hexagonal, wired with `go.uber.org/dig`) is described in [AGENTS.md](AGENTS.md).

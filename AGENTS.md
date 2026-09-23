@@ -4,11 +4,35 @@
 
 Deepsearch-mockgen-cli is a Go CLI that scans a directory for Go interfaces and generates mocks using the `mockgen` binary (from `github.com/uber-go/mock`). It provides a TUI flow for selecting interfaces and confirming output paths, plus CLI flags for non-interactive runs.
 
-Key components:
+The code follows a hexagonal (ports and adapters) layout wired with `go.uber.org/dig`:
 
-- [main.go](main.go) orchestrates CLI flags and TUI flow.
-- [generator/](generator/) handles interface discovery, mock path computation, and `mockgen` invocation.
-- [tui/](tui/) provides Bubble Tea-based prompts and progress UI.
+```
+src/
+  common/utils/            shared helpers (ToSnakeCase)
+  mockgen/                 domain core — no I/O, no framework
+    models/                MockTarget, ProgressUpdate
+    settings/              GenerationSettings (dirs), InteractionSettings (-A, -P)
+    services/interfaces/   ports: InterfaceFinder, InterfaceSelector, Prompter,
+                           MockPathBuilder, MockGenerator, MockBatchGenerator,
+                           ProgressReporter, MockgenReporter
+    services/              MockPathBuilder (default mock path), MockBatchGenerator
+    use_cases/             GenerateMocks (orchestrates the whole run)
+    configurations/        dig registrations of the domain
+  mockgen_golang/          adapter: go/ast interface discovery (InterfaceFinder)
+  mockgen_uber/            adapter: runs the uber-go/mock `mockgen` binary (MockGenerator)
+  mockgen_tui/             adapter: Bubble Tea prompts, selector and progress bar
+  mockgen_cli/             adapter: flags, usage, controller, log reporter
+  mockgen_host/            composition root: parses flags, builds the dig container, runs
+tests/
+  *_unit_tests/            when_*_test.go, Given/Should subtests, gomock
+  mockgen_mocks/           generated with this very CLI (`make mocks`)
+```
+
+Dependency rule: adapters (`mockgen_*`) depend on the domain (`mockgen`), never the
+reverse. The domain only talks to the outside world through the interfaces in
+`src/mockgen/services/interfaces`. To add a feature, add a port there, implement it in
+an adapter, register both in the matching `configurations` package, and consume the
+port from a use case.
 
 ## Setup Commands
 
@@ -30,15 +54,15 @@ Key components:
 
 ## Testing Instructions
 
-- No automated tests are currently present.
-- For changes, run `go test ./...` to ensure the code compiles (will be a no-op if no tests exist).
+- Unit tests live under `tests/*_unit_tests`: `make test` (or `go test ./...`).
+- After changing a port in `src/mockgen/services/interfaces`, regenerate mocks: `make mocks`.
 
 ## Code Style
 
 - Use standard Go formatting:
   - `gofmt -w .`
 - Keep public APIs stable unless required for a change.
-- Favor small, focused functions in `generator/` and `tui/` to keep TUI flow readable.
+- One struct per responsibility; business flow stays in `src/mockgen/use_cases`, technology in adapters.
 
 ## Build and Deployment
 
