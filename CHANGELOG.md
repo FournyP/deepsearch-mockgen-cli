@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.3...v1.0.4) (2026-09-23)
+
+### :rocket: Performance Improvements
+
+* generate mocks in parallel ([#2](https://github.com/FournyP/deepsearch-mockgen-cli/issues/2)) ([87090b2](https://github.com/FournyP/deepsearch-mockgen-cli/commit/87090b23ae95cacea9c5e050fd39f208ad7f159c))
+
 ## [1.0.3](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.2...v1.0.3) (2026-09-23)
 
 ### :recycle: Code Refactors
