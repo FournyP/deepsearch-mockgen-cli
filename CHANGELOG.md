@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.2...v1.0.3) (2026-09-23)
+
+### :recycle: Code Refactors
+
+* adopt hexagonal architecture ([#1](https://github.com/FournyP/deepsearch-mockgen-cli/issues/1)) ([000ff87](https://github.com/FournyP/deepsearch-mockgen-cli/commit/000ff87c8c3da22ff4e02d4200837fe4b7a11264))
+
 ## [1.0.2](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.1...v1.0.2) (2026-09-23)
 
 ### :green_heart: CI/CD
