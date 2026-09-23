@@ -76,4 +76,21 @@ func TestWhenBuildingMockPaths(t *testing.T) {
 			)
 		})
 	})
+
+	t.Run("Given an interface declared directly in the search directory", func(t *testing.T) {
+		t.Parallel()
+
+		t.Run("Should put the mock in a mocks directory", func(t *testing.T) {
+			t.Parallel()
+
+			suite := WhenBuildingMockPathsBeforeEach(t)
+			interfacePath := filepath.Join(suite.searchDir, "root.go")
+
+			assert.Equal(
+				t,
+				filepath.Join(suite.outputDir, "mocks", "root_mock.go"),
+				suite.sut.Build(suite.searchDir, suite.outputDir, interfacePath, "Root"),
+			)
+		})
+	})
 }
