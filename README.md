@@ -52,7 +52,8 @@ Options:
 
 Missing directories are prompted for. Mocks mirror the source tree under the output
 directory, each directory suffixed with `_mocks` (e.g. `src/pkg/saver.go` with
-`-S src -O tests` gives `tests/pkg_mocks/saver_mock.go`).
+`-S src -O tests` gives `tests/pkg_mocks/saver_mock.go`). Interfaces declared directly in
+the search directory go to `<output>/mocks/` (e.g. `src/root.go` gives `tests/mocks/root_mock.go`).
 
 Mocks are generated in parallel, one `mockgen` process per CPU at most. Interfaces
 whose mock paths are the same file are generated one after another.
