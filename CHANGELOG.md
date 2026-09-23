@@ -1,3 +1,9 @@
+## [1.0.5](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.4...v1.0.5) (2026-09-23)
+
+### :bug: Bug Fixes
+
+* generate root-level interface mocks in a mocks directory ([#3](https://github.com/FournyP/deepsearch-mockgen-cli/issues/3)) ([704b934](https://github.com/FournyP/deepsearch-mockgen-cli/commit/704b9346adce7764a254d4b342b9640e8b6166b7))
+
 ## [1.0.4](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.3...v1.0.4) (2026-09-23)
 
 ### :rocket: Performance Improvements
