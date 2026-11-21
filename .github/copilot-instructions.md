@@ -4,7 +4,7 @@
 
 When generating code for this repository:
 
-1. **Version Compatibility**: Use Go 1.24 features only (see go.mod).
+1. **Version Compatibility**: Use Go 1.27 features only (see go.mod).
 2. **Context Files**: There are no existing files in .github/copilot; rely on the codebase.
 3. **Codebase Patterns**: Follow established patterns in the `src/` domain and adapter packages.
 4. **Architectural Consistency**: Keep the hexagonal layout: domain in `src/mockgen`, adapters in `src/mockgen_*`, wiring in `configurations` packages.
@@ -12,7 +12,7 @@ When generating code for this repository:
 
 ## Technology Version Detection
 
-- **Language**: Go 1.24.0 (go.mod).
+- **Language**: Go 1.27.4 (go.mod).
 - **Primary libraries**:
   - `github.com/charmbracelet/bubbletea` v1.3.10
   - `github.com/charmbracelet/bubbles` v0.21.0
