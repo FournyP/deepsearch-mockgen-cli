@@ -3,8 +3,8 @@ package models
 import (
 	"fmt"
 
-	textinput "github.com/charmbracelet/bubbles/textinput"
-	tea "github.com/charmbracelet/bubbletea"
+	textinput "charm.land/bubbles/v2/textinput"
+	tea "charm.land/bubbletea/v2"
 )
 
 type TextInputModel struct {
@@ -30,11 +30,11 @@ func (m TextInputModel) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	var command tea.Cmd
 	m.input, command = m.input.Update(message)
 
-	if typed, ok := message.(tea.KeyMsg); ok {
+	if typed, ok := message.(tea.KeyPressMsg); ok {
 		if typed.String() == "enter" {
 			return m, tea.Quit
 		}
-		if typed.Type == tea.KeyCtrlC || typed.String() == "ctrl+c" {
+		if typed.String() == "ctrl+c" {
 			m.Cancelled = true
 			return m, tea.Quit
 		}
@@ -43,8 +43,8 @@ func (m TextInputModel) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	return m, command
 }
 
-func (m TextInputModel) View() string {
-	return fmt.Sprintf("%s\n\n%s\n\n(Enter to confirm)", m.question, m.input.View())
+func (m TextInputModel) View() tea.View {
+	return tea.NewView(fmt.Sprintf("%s\n\n%s\n\n(Enter to confirm)", m.question, m.input.View()))
 }
 
 func (m TextInputModel) Value() string {
