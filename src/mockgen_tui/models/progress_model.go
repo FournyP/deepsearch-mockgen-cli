@@ -3,9 +3,9 @@ package models
 import (
 	"fmt"
 
+	"charm.land/bubbles/v2/progress"
+	tea "charm.land/bubbletea/v2"
 	mockgen_models "github.com/FournyP/deepsearch-mockgen-cli/src/mockgen/models"
-	"github.com/charmbracelet/bubbles/progress"
-	tea "github.com/charmbracelet/bubbletea"
 )
 
 type progressUpdateMsg mockgen_models.ProgressUpdate
@@ -23,7 +23,7 @@ type ProgressModel struct {
 
 func NewProgressModel(total int, updates <-chan mockgen_models.ProgressUpdate) ProgressModel {
 	return ProgressModel{
-		bar:     progress.New(progress.WithDefaultGradient()),
+		bar:     progress.New(progress.WithDefaultBlend()),
 		total:   total,
 		updates: updates,
 	}
@@ -36,10 +36,8 @@ func (m ProgressModel) Init() tea.Cmd {
 func (m ProgressModel) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	switch typed := message.(type) {
 	case progress.FrameMsg:
-		nextBar, command := m.bar.Update(typed)
-		if bar, ok := nextBar.(progress.Model); ok {
-			m.bar = bar
-		}
+		var command tea.Cmd
+		m.bar, command = m.bar.Update(typed)
 		if m.done >= m.total && !m.bar.IsAnimating() {
 			return m, tea.Quit
 		}
@@ -63,7 +61,7 @@ func (m ProgressModel) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m ProgressModel) View() string {
+func (m ProgressModel) View() tea.View {
 	view := "Generating mocks...\n\n" + m.bar.View() + "\n\n"
 	if m.current != "" {
 		view += fmt.Sprintf("Current: %s\n\n", m.current)
@@ -71,7 +69,7 @@ func (m ProgressModel) View() string {
 	for _, line := range m.lines {
 		view += line + "\n"
 	}
-	return view
+	return tea.NewView(view)
 }
 
 func (m ProgressModel) listen() tea.Cmd {

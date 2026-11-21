@@ -4,8 +4,8 @@ import (
 	"errors"
 	"strings"
 
+	tea "charm.land/bubbletea/v2"
 	tui_models "github.com/FournyP/deepsearch-mockgen-cli/src/mockgen_tui/models"
-	tea "github.com/charmbracelet/bubbletea"
 )
 
 type Prompter struct{}

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"sort"
 
+	"charm.land/bubbles/v2/list"
+	tea "charm.land/bubbletea/v2"
 	tui_models "github.com/FournyP/deepsearch-mockgen-cli/src/mockgen_tui/models"
-	"github.com/charmbracelet/bubbles/list"
-	tea "github.com/charmbracelet/bubbletea"
 )
 
 type InterfaceSelector struct{}

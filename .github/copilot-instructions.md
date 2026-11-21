@@ -14,8 +14,8 @@ When generating code for this repository:
 
 - **Language**: Go 1.27.4 (go.mod).
 - **Primary libraries**:
-  - `github.com/charmbracelet/bubbletea` v1.3.10
-  - `github.com/charmbracelet/bubbles` v0.21.0
+  - `charm.land/bubbletea/v2` v2.1.2
+  - `charm.land/bubbles/v2` v2.2.2
   - `go.uber.org/dig` v1.19.0 (dependency injection)
   - `go.uber.org/mock` v0.6.0 and `github.com/stretchr/testify` (tests)
 - **External tool**: `mockgen` from `github.com/uber-go/mock` (installed via `go install`).

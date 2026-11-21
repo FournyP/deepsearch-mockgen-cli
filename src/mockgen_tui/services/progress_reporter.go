@@ -1,9 +1,9 @@
 package services
 
 import (
+	tea "charm.land/bubbletea/v2"
 	mockgen_models "github.com/FournyP/deepsearch-mockgen-cli/src/mockgen/models"
 	tui_models "github.com/FournyP/deepsearch-mockgen-cli/src/mockgen_tui/models"
-	tea "github.com/charmbracelet/bubbletea"
 )
 
 type ProgressReporter struct{}
