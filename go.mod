@@ -1,6 +1,6 @@
 module github.com/FournyP/deepsearch-mockgen-cli
 
-go 1.24.2
+go 1.27.4
 
 require (
 	github.com/charmbracelet/bubbles v0.21.0
