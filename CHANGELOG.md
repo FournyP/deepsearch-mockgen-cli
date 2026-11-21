@@ -1,3 +1,9 @@
+## [1.0.7](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.6...v1.0.7) (2026-11-21)
+
+### :wrench: Miscellaneous Chores
+
+* upgrade Go dependencies ([#5](https://github.com/FournyP/deepsearch-mockgen-cli/issues/5)) ([f5727ad](https://github.com/FournyP/deepsearch-mockgen-cli/commit/f5727ad7bbd6a7ae17925a6fa69301d1bbde092e))
+
 ## [1.0.6](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.5...v1.0.6) (2026-11-21)
 
 ### :wrench: Miscellaneous Chores
