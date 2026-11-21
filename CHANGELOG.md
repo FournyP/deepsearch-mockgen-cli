@@ -1,3 +1,9 @@
+## [1.0.6](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.5...v1.0.6) (2026-11-21)
+
+### :wrench: Miscellaneous Chores
+
+* upgrade Go to 1.27.4 ([#4](https://github.com/FournyP/deepsearch-mockgen-cli/issues/4)) ([19abce1](https://github.com/FournyP/deepsearch-mockgen-cli/commit/19abce1e60a2539c1387d70b0f78793c0d42469c))
+
 ## [1.0.5](https://github.com/FournyP/deepsearch-mockgen-cli/compare/v1.0.4...v1.0.5) (2026-09-23)
 
 ### :bug: Bug Fixes
